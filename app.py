@@ -1,11 +1,15 @@
+from dotenv import load_dotenv
 from flask import Flask
+from routes.app import app
+from routes.api import api
 
-app=Flask(__name__)
+load_dotenv()
 
-@app.route('/')
-def func():
-       return 'main'
+flaskApp = Flask(__name__)
+
+flaskApp.register_blueprint(app)
+flaskApp.register_blueprint(api, url_prefix='/api')
 
 if __name__=='__main__':
-       app.debug=True
-       app.run()
+  flaskApp.debug=True
+  flaskApp.run()
