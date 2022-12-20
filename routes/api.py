@@ -3,9 +3,11 @@ from db import reset_db as db_reset_db
 
 api = Blueprint('api', __name__)
 
+
 @api.route('/')
 def main():
   return 'api'
+
 
 @api.route('/reset-db/<pwd>', methods=['POST'])
 def reset_db(pwd):
