@@ -1,5 +1,22 @@
+import bcrypt
 from db import db
 import validation
+
+
+def encrypt(password):
+  return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+
+def authenticate(email, password):
+  try:
+    user = get_by_email(email)
+    if (user is None
+      or not bcrypt.checkpw(
+        password.encode('utf-8'),
+        user.password.encode('utf-8'))):
+      raise Exception()
+  except:
+    raise Exception('Unauthorized')
 
 
 def register(email, password, birthdate):
@@ -16,7 +33,7 @@ def register(email, password, birthdate):
   db().execute(
     "INSERT INTO users (email, password, key, birthdate)VALUES (?, ?, ?)",
     email,
-    password,
+    encrypt(password),
     birthdate)
 
 
