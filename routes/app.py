@@ -1,35 +1,35 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
-app = Blueprint('app', __name__)
+app = Blueprint("app", __name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route("/", methods=["GET"])
 def main():
-  return 'main'
+  return render_template("auth.register.html")
 
 
-@app.route('/list', methods=['GET'])
+@app.route("/list", methods=["GET"])
 def birthday_list():
-  return 'list'
+  return "list"
 
 
-@app.route('/add/<user_key>', methods=['POST'])
+@app.route("/add/<user_key>", methods=["POST"])
 def add(user_key):
-  return 'add'
+  return "add"
 
 
 # AUTH
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-  return 'login'
+  return "login"
 
 
-@app.route('/logout', methods=['POST'])
+@app.route("/logout", methods=["POST"])
 def logout():
-  return 'logout'
+  return "logout"
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def register():
-  return 'register'
+  return "register"
