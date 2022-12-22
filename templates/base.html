@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+
+  <title>Birthdays calendar</title>
+
+  <link href="{{ url_for('static', filename='vendor/mdi-font/css/material-design-iconic-font.min.css') }}" rel="stylesheet" media="all">
+  <link href="{{ url_for('static', filename='vendor/font-awesome-4.7/css/font-awesome.min.css') }}" rel="stylesheet" media="all">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="all">
+
+  {% block styles %}{% endblock %}
+
+</head>
+<body class="vh-100 vw-100 page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+
+  <header class="app-header">{% block header %}{% endblock %}</header>
+
+  <main class="app-main">{% block main %}{% endblock %}</main>
+
+  <footer class="app-footer">{% block footer %}{% endblock %}</footer>
+
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
