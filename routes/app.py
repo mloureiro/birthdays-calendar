@@ -9,7 +9,7 @@ def main():
 
 
 @app.route('/list', methods=['GET'])
-def list():
+def birthday_list():
   return 'list'
 
 
