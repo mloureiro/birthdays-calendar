@@ -66,4 +66,10 @@ def register():
 
     return redirect(url_for('app.register', success=email))
   except UserDetailsInvalidException as error:
-    return redirect(url_for('app.register', failed=str(error)))
+    return redirect(url_for('app.register',
+      failed=str(error),
+      first_name=first_name,
+      last_name=last_name,
+      birthday=birthday,
+      email=email,
+    ))
