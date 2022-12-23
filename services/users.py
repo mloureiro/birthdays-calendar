@@ -1,6 +1,12 @@
 import bcrypt
 from db import db
-import validation
+from services.utils import string_to_date, random_string
+from services.validation import (
+  is_valid_name,
+  is_valid_email,
+  is_valid_password,
+  is_valid_birthdate,
+)
 
 
 def encrypt(password):
@@ -9,7 +15,7 @@ def encrypt(password):
 
 def authenticate(email, password):
   try:
-    user = get_by_email(email)
+    user = get_user_by_email(email)
     if (user is None
       or not bcrypt.checkpw(
         password.encode('utf-8'),
@@ -27,25 +33,32 @@ def register(email, password, birthdate):
   ):
     raise Exception("Invalid user values")
 
-  if get_by_email(email) is not None:
-    raise Exception("Existing user")
+  if get_user_by_email(email) is not None:
+    raise Exception("Email is already registered")
 
   db().execute(
-    "INSERT INTO users (email, password, key, birthdate)VALUES (?, ?, ?)",
-    email,
-    encrypt(password),
-    birthdate)
+    """
+    INSERT INTO users 
+      (email, password, public_id, birthdate, first_name, last_name) 
+    VALUES (?,?,?,?,?,?)
+    """,
+    (email,
+    encrypt(password).decode('utf-8'),
+    random_string(),
+    str(string_to_date(birthdate)),
+    first_name,
+    last_name))
 
 
-def get_by_email(email):
-  try:
-    user_list = db().execute('SELECT * FROM user WHERE email = ?', email)
-    if len(user_list) != 1:
-      raise Exception('Expected 1 user but found %d' % len(user_list))
+def get_user_by_email(email):
+  user_list = db().execute('SELECT * FROM user WHERE email = ?', (email,))
+  if len(user_list) == 0:
+    return None
 
+  if len(user_list) == 1:
     return user_list[0]
-  except:
-    return False
+
+  raise Exception('Expected 1 user but found %d' % len(user_list))
 
 
 def validate_user_details(first_name, last_name, email, password, birthdate):
