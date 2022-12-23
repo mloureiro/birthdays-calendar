@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 
 {% block styles %}
-<link href="/static/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+<link href="{{ url_for('static', filename='vendor/datepicker/daterangepicker.css') }}" rel="stylesheet" media="all">
 {% endblock %}
 
 {% block scripts %}
 <!-- Vendor JS-->
-<script src="/static/vendor/datepicker/moment.min.js"></script>
-<script src="/static/vendor/datepicker/daterangepicker.js"></script>
+<script src="{{ url_for('static', filename='vendor/datepicker/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datepicker/daterangepicker.js') }}"></script>
 
-<script src="/static/js/register.js"></script>
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
 {% endblock %}
 
 {% block main %}
 <div class="wrapper wrapper--w680">
   <div class="card card-4">
     <div class="card-body">
-      <h2 class="title">Registration Form</h2>
+      <h2 class="title">Registration form</h2>
 
-        <form method="POST">
+      <form method="POST" action="{{ url_for('app.register') }}">
         <div class="row row-space">
           <div class="col-2">
             <div class="input-group">
