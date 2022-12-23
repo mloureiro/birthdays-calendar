@@ -1,4 +1,15 @@
-from flask import Blueprint, render_template
+from flask import (
+  Blueprint,
+  render_template,
+  redirect,
+  request,
+  url_for
+)
+from services.users import (
+  UserDetailsInvalidException,
+  register_user,
+  validate_user_details
+)
 
 app = Blueprint("app", __name__)
 
@@ -32,4 +43,27 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-  return "register"
+  if request.method == "GET":
+    return render_template("auth/register.html")
+
+  first_name = request.form['first_name']
+  last_name = request.form['last_name']
+  birthday = request.form['birthday']
+  terms_and_conditions = request.form['terms_and_conditions']
+  email = request.form['email']
+  password = request.form['password']
+  password_confirmation = request.form['password_confirmation']
+
+  try:
+    if not terms_and_conditions:
+      raise UserDetailsInvalidException('Terms and conditions must be accepted')
+
+    if not password == password_confirmation:
+      raise UserDetailsInvalidException('Password and confirmation must match')
+
+    validate_user_details(first_name, last_name, email, password, birthday)
+    register_user(first_name, last_name, email, password, birthday)
+
+    return redirect(url_for('app.register', success=email))
+  except UserDetailsInvalidException as error:
+    return redirect(url_for('app.register', failed=str(error)))
