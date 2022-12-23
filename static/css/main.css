@@ -140,6 +140,13 @@ body {
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 14px;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -429,7 +436,7 @@ input {
 }
 
 .radio-container {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
   padding-left: 30px;
   cursor: pointer;
@@ -560,3 +567,8 @@ input {
     padding: 50px 40px;
   }
 }
+
+/* ==========================================================================
+   #OTHER
+   ========================================================================== */
+
