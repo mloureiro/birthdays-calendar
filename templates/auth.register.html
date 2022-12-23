@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link href="/static/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+{% endblock %}
+
+{% block scripts %}
+<!-- Vendor JS-->
+<script src="/static/vendor/datepicker/moment.min.js"></script>
+<script src="/static/vendor/datepicker/daterangepicker.js"></script>
+
+<script src="/static/js/register.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class="wrapper wrapper--w680">
+  <div class="card card-4">
+    <div class="card-body">
+      <h2 class="title">Registration Form</h2>
+
+        <form method="POST">
+        <div class="row row-space">
+          <div class="col-2">
+            <div class="input-group">
+              <label for="first_name" class="label">First name</label>
+              <input class="input--style-4" type="text" name="first_name" id="first_name">
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="input-group">
+              <label for="last_name" class="label">Last name</label>
+              <input class="input--style-4" type="text" name="last_name" id="last_name">
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-space">
+          <div class="col-2">
+            <div class="input-group">
+              <label for="birthday" class="label">Birthday</label>
+              <div class="input-group-icon">
+                <input class="input--style-4 js-datepicker" type="text" name="birthday" id="birthday">
+                <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="input-group flex-end">
+              <div class="p-b-10">
+                <label for="terms_and_conditions" class="radio-container">
+                  Accept terms & conditions
+                  <input type="checkbox" name="terms_and_conditions" id="terms_and_conditions">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-space">
+          <div class="col-full">
+            <div class="input-group">
+              <label for="email" class="label">Email</label>
+              <input class="input--style-4" type="email" name="email" id="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-space">
+          <div class="col-2">
+            <div class="input-group">
+              <label for="password" class="label">Password</label>
+              <input class="input--style-4" type="password" name="password" id="password">
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="input-group">
+              <label for="password" class="label">Password confirmation</label>
+              <input class="input--style-4" type="password" name="password_confirmation" id="password_confirmation">
+            </div>
+          </div>
+        </div>
+
+        <div class="p-t-15">
+          <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
