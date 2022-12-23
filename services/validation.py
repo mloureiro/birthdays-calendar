@@ -10,16 +10,20 @@ def is_valid_email(email):
     email)
 
 
-def is_valid_password(pwd):
+def is_valid_password(pwd, strict=True):
   return (len(pwd) > 8
-    # has a digit
-    and re.search(r"\d", pwd)
-    # has a upper case letter
-    and re.search(r"[A-Z]", pwd)
+    # has an upper case letter
+    and bool(re.search(r"[A-Z]", pwd))
     # has a lower case letter
-    and re.search(r"[a-z]", pwd)
-    # has a special character
-    and re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', pwd));
+    and bool(re.search(r"[a-z]", pwd))
+    and (
+        not strict
+        or (
+          # has a digit
+          bool(re.search(r"\d", pwd))
+          # has a special character
+          and bool(re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', pwd)))
+        ))
 
 
 def is_valid_birthdate(date):
