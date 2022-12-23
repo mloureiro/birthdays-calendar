@@ -1,13 +1,15 @@
 import re
 from datetime import datetime
+from services.utils import string_to_date
 
-DEFAULT_DATE_FORMAT = '%Y-%m-%d'
+def is_valid_name(name):
+  return bool(re.fullmatch(r'\b([\w+\-\.]+\s?)+\b', name))
 
 
 def is_valid_email(email):
-  return re.fullmatch(
+  return bool(re.fullmatch(
     r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
-    email)
+    email))
 
 
 def is_valid_password(pwd, strict=True):
@@ -28,7 +30,6 @@ def is_valid_password(pwd, strict=True):
 
 def is_valid_birthdate(date):
   try:
-    date = datetime.strptime(date, DEFAULT_DATE_FORMAT).date()
-    return date < datetime.now()
+    return string_to_date(date) < datetime.now().date()
   except:
     return False
