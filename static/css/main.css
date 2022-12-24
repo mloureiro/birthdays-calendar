@@ -507,6 +507,7 @@ input {
 .input-group {
   position: relative;
   margin-bottom: 22px;
+  flex: 1;
 }
 
 .input-group-icon {
