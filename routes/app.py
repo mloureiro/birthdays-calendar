@@ -5,26 +5,30 @@ from flask import (
   request,
   url_for
 )
-from services.exceptions import ValidationException;
+from services.exceptions import ValidationException
 from services.users import (
   register_user,
   validate_user_details
 )
+from routes.utils import login_required
 
 app = Blueprint("app", __name__)
 
 
 @app.route("/", methods=["GET"])
+@login_required
 def main():
-  return render_template("auth.register.html")
+  return "main"
 
 
 @app.route("/list", methods=["GET"])
+@login_required
 def birthday_list():
   return "list"
 
 
-@app.route("/add/<user_key>", methods=["POST"])
+@app.route("/add/<user_key>", methods=["GET", "POST"])
+@login_required
 def add(user_key):
   return "add"
 
