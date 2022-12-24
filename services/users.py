@@ -1,12 +1,8 @@
 import bcrypt
 from db import db
 from services.utils import string_to_date, random_string
-from services.validation import (
-  is_valid_name,
-  is_valid_email,
-  is_valid_password,
-  is_valid_birthdate,
-)
+import services.validation as validation
+from services.exceptions import ValidationException;
 
 
 def encrypt(password):
@@ -25,13 +21,8 @@ def authenticate(email, password):
     raise Exception('Unauthorized')
 
 
-def register(email, password, birthdate):
-  if (
-    not validation.is_valid_email(email)
-    or not validation.is_valid_password(password)
-    or not validation.is_valid_birthdate(birthdate)
-  ):
-    raise Exception("Invalid user values")
+def register_user(first_name, last_name, email, password, birthdate):
+  validate_user_details(first_name, last_name, email, password, birthdate)
 
   if get_user_by_email(email) is not None:
     raise Exception("Email is already registered")
@@ -62,21 +53,13 @@ def get_user_by_email(email):
 
 
 def validate_user_details(first_name, last_name, email, password, birthdate):
-  if not is_valid_name(first_name):
-    raise UserDetailsInvalidException("Name", first_name)
-  if not is_valid_name(last_name):
-    raise UserDetailsInvalidException("Name", last_name)
-  if not is_valid_email(email):
-    raise UserDetailsInvalidException("Email", email)
-  if not is_valid_password(password, strict=False):
-    raise UserDetailsInvalidException("Password")
-  if not is_valid_birthdate(birthdate):
-    raise UserDetailsInvalidException("Birthdate", birthdate)
-
-
-class UserDetailsInvalidException(Exception):
-  def __init__(self, key, value=None, *args):
-    message = f"{key} is invalid" if value is None else f"{key} as '{value}' is invalid"
-    print('[message]>>', message)
-    super().__init__(message, args)
-
+  if not validation.is_valid_name(first_name):
+    raise ValidationException.by_value("Name", first_name)
+  if not validation.is_valid_name(last_name):
+    raise ValidationException.by_value("Name", last_name)
+  if not validation.is_valid_email(email):
+    raise ValidationException.by_value("Email", email)
+  if not validation.is_valid_password(password, strict=False):
+    raise ValidationException.by_key("Password")
+  if not validation.is_valid_birthdate(birthdate):
+    raise ValidationException.by_value("Birthdate", birthdate)

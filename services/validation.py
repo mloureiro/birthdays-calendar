@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 from services.utils import string_to_date
 
+
 def is_valid_name(name):
   return bool(re.fullmatch(r'\b([\w+\-\.]+\s?)+\b', name))
 

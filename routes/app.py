@@ -5,8 +5,8 @@ from flask import (
   request,
   url_for
 )
+from services.exceptions import ValidationException;
 from services.users import (
-  UserDetailsInvalidException,
   register_user,
   validate_user_details
 )
@@ -56,18 +56,18 @@ def register():
 
   try:
     if not terms_and_conditions:
-      raise UserDetailsInvalidException('Terms and conditions must be accepted')
+      raise ValidationException.by_message('Terms and conditions must be accepted')
 
     if not password == password_confirmation:
-      raise UserDetailsInvalidException('Password and confirmation must match')
+      raise ValidationException.by_message('Password and confirmation do not match')
 
     validate_user_details(first_name, last_name, email, password, birthday)
     register_user(first_name, last_name, email, password, birthday)
 
     return redirect(url_for('app.register', success=email))
-  except UserDetailsInvalidException as error:
+  except ValidationException as error:
     return redirect(url_for('app.register',
-      failed=str(error),
+      failure=str(error),
       first_name=first_name,
       last_name=last_name,
       birthday=birthday,
