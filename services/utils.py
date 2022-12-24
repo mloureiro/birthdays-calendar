@@ -12,4 +12,4 @@ def string_to_date(date_string):
 
 
 def random_string(length=8, character_list=DEFAULT_CHARACTER_LIST):
-  return ''.join(choice(string.ascii_letters + string.digits) for _ in range(length))
+  return ''.join(choice(character_list) for _ in range(length))
