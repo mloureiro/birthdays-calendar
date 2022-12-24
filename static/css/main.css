@@ -134,7 +134,14 @@ button {
    ========================================================================== */
 .page-wrapper {
   min-height: 100vh;
-  padding: 40px 60px;
+  padding: 8px 20px;
+}
+
+
+@media (min-width: 767px) {
+  .page-wrapper {
+    padding: 40px 60px;
+  }
 }
 
 body {
@@ -573,3 +580,8 @@ input {
    #OTHER
    ========================================================================== */
 
+.center-elements {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
